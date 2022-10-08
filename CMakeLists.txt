@@ -37,7 +37,7 @@ ecbuild_bundle( PROJECT oops     GIT "https://github.com/jcsda/oops.git"        
 ecbuild_bundle( PROJECT vader    GIT "https://github.com/jcsda/vader.git"       TAG 1.1.0 )
 ecbuild_bundle( PROJECT saber    GIT "https://github.com/jcsda/saber.git"       TAG 1.4.0 )
 
-ecbuild_bundle( PROJECT crtm     GIT "https://github.com/jcsda/crtm.git"        TAG v2.4-jedi )
+#ecbuild_bundle( PROJECT crtm     GIT "https://github.com/jcsda/crtm.git"        TAG v2.4-jedi )
 ecbuild_bundle( PROJECT gsw      GIT "https://github.com/jcsda/GSW-Fortran.git" TAG v3.07 )
 ecbuild_bundle( PROJECT ioda     GIT "https://github.com/jcsda/ioda.git"        TAG 2.3.0 )
 ecbuild_bundle( PROJECT ufo      GIT "https://github.com/jcsda/ufo.git"         TAG 1.4.0 )
