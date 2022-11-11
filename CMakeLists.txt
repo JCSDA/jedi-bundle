@@ -1,5 +1,3 @@
-# Note - as of Nov 7, 2022, the main branch of this repository is frozen. The develop branch is used for all releases and all developments.
-
 # (C) Copyright 2022 UCAR
 #
 
