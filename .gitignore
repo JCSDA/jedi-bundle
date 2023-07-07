@@ -24,12 +24,13 @@ jedicmake/
 saber/
 odc/
 odyssey/
-ioda-converters/
+iodaconv/
 ioda/
 vader/
 oops/
 ufo/
 ewok/
+skylab/
 
 # SOCA
 soca/
