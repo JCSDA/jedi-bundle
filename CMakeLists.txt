@@ -28,41 +28,25 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 # when building, already use the install RPATH
 set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 
-# Use external jedi-cmake or build in bundle
-if(DEFINED ENV{jedi_cmake_ROOT})
-  include( $ENV{jedi_cmake_ROOT}/share/jedicmake/Functions/git_functions.cmake )
-else()
-  ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" BRANCH develop UPDATE RECURSIVE )
-  include( jedicmake/cmake/Functions/git_functions.cmake )
-endif()
+# Always use external jedi-cmake or build in bundle
+include( $ENV{jedi_cmake_ROOT}/share/jedicmake/Functions/git_functions.cmake )
 
-#ecbuild_bundle( PROJECT eckit    GIT "https://github.com/ecmwf/eckit.git" TAG 1.23.0 )
-#ecbuild_bundle( PROJECT fckit    GIT "https://github.com/ecmwf/fckit.git" TAG 0.10.1 )
-#ecbuild_bundle( PROJECT atlas    GIT "https://github.com/ecmwf/atlas.git" TAG 0.33.0 )
+ecbuild_bundle( PROJECT oops     GIT "https://github.com/jcsda/oops.git"  TAG 1.7.0 )
+ecbuild_bundle( PROJECT vader    GIT "https://github.com/jcsda/vader.git" TAG 1.4.0 )
+ecbuild_bundle( PROJECT saber    GIT "https://github.com/jcsda/saber.git" TAG 1.7.0 )
 
-ecbuild_bundle( PROJECT oops     GIT "https://github.com/jcsda/oops.git"        BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT vader    GIT "https://github.com/jcsda/vader.git"       BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT saber    GIT "https://github.com/jcsda/saber.git"       BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT crtm     GIT "https://github.com/JCSDA/CRTMv3.git"      TAG v3.0.0-skylabv5 )
+ecbuild_bundle( PROJECT gsw      GIT "https://github.com/jcsda/GSW-Fortran.git" TAG v3.07 )
+ecbuild_bundle( PROJECT ioda     GIT "https://github.com/jcsda/ioda.git"        TAG 2.6.0 )
+ecbuild_bundle( PROJECT ufo      GIT "https://github.com/jcsda/ufo.git"         TAG 1.7.0 )
 
-ecbuild_bundle( PROJECT crtm     GIT "https://github.com/JCSDA/CRTMv3.git"      BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT gsw      GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT ioda     GIT "https://github.com/jcsda/ioda.git"        BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT ufo      GIT "https://github.com/jcsda/ufo.git"         BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3         GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" TAG 1.2.0.jcsda )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                   TAG 1.2.0 )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"    TAG 1.2.0 )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                TAG 1.6.0 )
 
-# Build IODA converters if requested
-option(BUILD_IODA_CONVERTERS "Build IODA Converters" OFF)
-if(BUILD_IODA_CONVERTERS)
-  ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/JCSDA/ioda-converters.git" BRANCH develop UPDATE )
-endif()
-
-#ecbuild_bundle( PROJECT fms         GIT "https://github.com/jcsda/FMS.git"                           BRANCH release-stable UPDATE )
-ecbuild_bundle( PROJECT fv3         GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git"       BRANCH release-stable UPDATE )
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                         BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"          BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                      BRANCH develop UPDATE )
-
-ecbuild_bundle( PROJECT mom6        GIT "https://github.com/jcsda/MOM6.git"            BRANCH main-ecbuild UPDATE RECURSIVE )
-ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT mom6        GIT "https://github.com/jcsda/MOM6.git" TAG 2022.1.0 RECURSIVE )
+ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git" TAG 1.5.0 )
 
 ecbuild_bundle_finalize()
 
