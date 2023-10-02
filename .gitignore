@@ -61,6 +61,9 @@ ioda-data/
 ufo-data/
 saber-data/
 
+# Coupled fv3-jedi + soca
+coupling/
+
 solo/
 ewok/
 r2d2/
