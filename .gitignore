@@ -48,6 +48,10 @@ femps/
 fv3-jedi-lm/
 fv3-jedi/
 
+# mpas-jedi and related repos
+mpas/
+mpas-jedi/
+
 # Observation operators
 crtm/
 gsw/
@@ -59,7 +63,8 @@ fv3-jedi-data/
 test-data-release/
 ioda-data/
 ufo-data/
-saber-data/
+mpas-jedi-data/
+static-data/
 
 # Coupled fv3-jedi + soca
 coupling/
