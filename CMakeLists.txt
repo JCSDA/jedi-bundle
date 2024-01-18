@@ -1,11 +1,11 @@
-# (C) Copyright 2022 UCAR
+# (C) Copyright 2024 UCAR
 #
 
-cmake_minimum_required( VERSION 3.12 FATAL_ERROR )
+cmake_minimum_required( VERSION 3.14 FATAL_ERROR )
 
 find_package( ecbuild 3.6 REQUIRED HINTS ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../ecbuild)
 
-project( jedi-bundle VERSION 6.0.0 LANGUAGES C CXX Fortran )
+project( jedi-bundle VERSION 7.0.0 LANGUAGES C CXX Fortran )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -28,17 +28,12 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 # when building, already use the install RPATH
 set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 
-# Use external jedi-cmake or build in bundle
-if(DEFINED ENV{jedi_cmake_ROOT})
-  include( $ENV{jedi_cmake_ROOT}/share/jedicmake/Functions/git_functions.cmake )
-else()
-  ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" BRANCH develop UPDATE RECURSIVE )
-  include( jedicmake/cmake/Functions/git_functions.cmake )
-endif()
+# Use external jedi-cmake
+include( $ENV{jedi_cmake_ROOT}/share/jedicmake/Functions/git_functions.cmake )
 
 #ecbuild_bundle( PROJECT eckit    GIT "https://github.com/ecmwf/eckit.git" TAG 1.24.4 )
 #ecbuild_bundle( PROJECT fckit    GIT "https://github.com/ecmwf/fckit.git" TAG 0.11.0 )
-#ecbuild_bundle( PROJECT atlas    GIT "https://github.com/ecmwf/atlas.git" TAG 0.34.0 )
+#ecbuild_bundle( PROJECT atlas    GIT "https://github.com/ecmwf/atlas.git" TAG 0.35.0 )
 
 ecbuild_bundle( PROJECT gsw      GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
 
@@ -63,6 +58,11 @@ ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git" 
 
 ecbuild_bundle( PROJECT mom6        GIT "https://github.com/jcsda/MOM6.git"            BRANCH main-ecbuild UPDATE RECURSIVE )
 ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE )
+
+set(MPAS_DOUBLE_PRECISION "ON" CACHE STRING "MPAS-Model: Use double precision 64-bit Floating point.")
+set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
+ecbuild_bundle( PROJECT mpas           GIT "https://github.com/jcsda/MPAS-Model.git"   BRANCH release-stable UPDATE )
+ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"    BRANCH develop UPDATE )
 
 ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"         BRANCH develop UPDATE )
 
