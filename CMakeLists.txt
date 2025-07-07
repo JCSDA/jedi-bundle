@@ -1,4 +1,4 @@
-# (C) Copyright 2024 UCAR
+# (C) Copyright 2025 UCAR
 #
 
 cmake_minimum_required( VERSION 3.14 FATAL_ERROR )
@@ -18,8 +18,21 @@ set( ECBUILD_DEFAULT_BUILD_TYPE Release )
 set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 set( ENABLE_OMP ON CACHE BOOL "Compile with OpenMP" )
 
-# Define bundle
-ecbuild_bundle_initialize()
+# Stop search as soon as Python satisfying version constraints is found.
+set( Python3_FIND_STRATEGY LOCATION )
+
+# Depend path for non-ecbuild packages
+set(DEPEND_LIB_ROOT ${CMAKE_CURRENT_BINARY_DIR}/Depends)
+list(APPEND CMAKE_PREFIX_PATH ${DEPEND_LIB_ROOT})
+
+# Library path for non-ecbuild packages
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/lib)
+
+include( GNUInstallDirs )
+if(APPLE)
+  list( APPEND CMAKE_INSTALL_RPATH $ENV{llvm_openmp_ROOT}/lib )
+endif()
+list( APPEND CMAKE_INSTALL_RPATH ${CMAKE_CURRENT_BINARY_DIR}/fv3 )
 
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
@@ -27,6 +40,9 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 
 # when building, already use the install RPATH
 set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
+
+# Define bundle
+ecbuild_bundle_initialize()
 
 # Use external jedi-cmake
 include( $ENV{jedi_cmake_ROOT}/share/jedicmake/Functions/git_functions.cmake )
@@ -37,7 +53,7 @@ include( $ENV{jedi_cmake_ROOT}/share/jedicmake/Functions/git_functions.cmake )
 
 option(BUILD_GSIBEC "Build GSIbec" OFF)
 if(BUILD_GSIBEC)
-  ecbuild_bundle( PROJECT gsibec   GIT "https://github.com/geos-esm/GSIbec" TAG 1.2.1 )
+  ecbuild_bundle( PROJECT gsibec   GIT "https://github.com/geos-esm/GSIbec" TAG 1.2.2 )
 endif()
 
 ecbuild_bundle( PROJECT gsw      GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
@@ -46,9 +62,14 @@ ecbuild_bundle( PROJECT oops     GIT "https://github.com/jcsda/oops.git"        
 ecbuild_bundle( PROJECT vader    GIT "https://github.com/jcsda/vader.git"       BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT saber    GIT "https://github.com/jcsda/saber.git"       BRANCH develop UPDATE )
 
-ecbuild_bundle( PROJECT crtm     GIT "https://github.com/jcsda/CRTMv3.git"      BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT crtm     GIT "https://github.com/jcsda/CRTMv3.git"               BRANCH develop UPDATE )
 
+option(ENABLE_IODA_DATA "Obtain ioda test data from ioda-data repository (vs tarball)" ON)
+ecbuild_bundle( PROJECT ioda-data GIT "https://github.com/jcsda-internal/ioda-data.git"  BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT ioda     GIT "https://github.com/jcsda/ioda.git"        BRANCH develop UPDATE )
+
+option(ENABLE_UFO_DATA "Obtain ufo test data from ufo-data repository (vs tarball)" ON)
+ecbuild_bundle( PROJECT ufo-data GIT "https://github.com/jcsda-internal/ufo-data.git"    BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT ufo      GIT "https://github.com/jcsda/ufo.git"         BRANCH develop UPDATE )
 
 # Build IODA converters if requested
@@ -57,20 +78,30 @@ if(BUILD_IODA_CONVERTERS)
   ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" BRANCH develop UPDATE )
 endif()
 
-ecbuild_bundle( PROJECT fv3         GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git"       BRANCH release-stable UPDATE )
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                         BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"          BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                      BRANCH develop UPDATE )
+# Include FV3 dycore
+# Use our own fork/branch of the fv3 dycore for now
+include(fv3-interface.cmake)
+ecbuild_bundle( PROJECT fv3         GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git"            BRANCH release-stable UPDATE )
 
-ecbuild_bundle( PROJECT mom6        GIT "https://github.com/jcsda/MOM6.git"            BRANCH main-ecbuild UPDATE RECURSIVE )
-ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                     BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      BRANCH develop UPDATE )
+
+option(ENABLE_FV3_JEDI_DATA "Obtain fv3-jedi test data from fv3-jedi-data repository (vs tarball)" ON)
+ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git" BRANCH develop UPDATE )
+
+ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE RECURSIVE )
 
 set(MPAS_DOUBLE_PRECISION "ON" CACHE STRING "MPAS-Model: Use double precision 64-bit Floating point.")
 set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
-ecbuild_bundle( PROJECT mpas           GIT "https://github.com/jcsda/MPAS-Model.git"   BRANCH release-stable UPDATE )
-ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"    BRANCH develop UPDATE )
+set(MPAS_OPENMP "ON" CACHE STRING "MPAS-Model: Enable OpenMP.")
+ecbuild_bundle( PROJECT mpas           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"     TAG v8.2.1 )
 
-ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"         BRANCH develop UPDATE )
+option(ENABLE_MPAS_JEDI_DATA "Obtain mpas-jedi test data from mpas-jedi-data repository (vs tarball)" ON)
+ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      BRANCH develop UPDATE )
+
+ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"           BRANCH develop UPDATE )
 
 ecbuild_bundle_finalize()
 
