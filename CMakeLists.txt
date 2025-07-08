@@ -53,7 +53,7 @@ include( $ENV{jedi_cmake_ROOT}/share/jedicmake/Functions/git_functions.cmake )
 
 option(BUILD_GSIBEC "Build GSIbec" OFF)
 if(BUILD_GSIBEC)
-  ecbuild_bundle( PROJECT gsibec   GIT "https://github.com/geos-esm/GSIbec" TAG 1.2.2 )
+  ecbuild_bundle( PROJECT gsibec   GIT "https://github.com/geos-esm/GSIbec" TAG 1.2.1 )
 endif()
 
 ecbuild_bundle( PROJECT gsw      GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
@@ -77,11 +77,6 @@ option(BUILD_IODA_CONVERTERS "Build IODA Converters" OFF)
 if(BUILD_IODA_CONVERTERS)
   ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" BRANCH develop UPDATE )
 endif()
-
-# Include FV3 dycore
-# Use our own fork/branch of the fv3 dycore for now
-include(fv3-interface.cmake)
-ecbuild_bundle( PROJECT fv3         GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git"            BRANCH release-stable UPDATE )
 
 ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                     BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      BRANCH develop UPDATE )
