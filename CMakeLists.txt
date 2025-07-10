@@ -32,7 +32,6 @@ include( GNUInstallDirs )
 if(APPLE)
   list( APPEND CMAKE_INSTALL_RPATH $ENV{llvm_openmp_ROOT}/lib )
 endif()
-list( APPEND CMAKE_INSTALL_RPATH ${CMAKE_CURRENT_BINARY_DIR}/fv3 )
 
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
