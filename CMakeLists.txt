@@ -79,23 +79,25 @@ if(BUILD_IODA_CONVERTERS)
   ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" BRANCH develop UPDATE )
 endif()
 
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                     BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      BRANCH develop UPDATE )
 
 option(ENABLE_FV3_JEDI_DATA "Obtain fv3-jedi test data from fv3-jedi-data repository (vs tarball)" ON)
 ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  BRANCH develop UPDATE )
 
 ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE RECURSIVE )
 
-set(MPAS_DOUBLE_PRECISION "ON" CACHE STRING "MPAS-Model: Use double precision 64-bit Floating point.")
-set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
-set(MPAS_OPENMP "ON" CACHE STRING "MPAS-Model: Enable OpenMP.")
-ecbuild_bundle( PROJECT mpas           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"     TAG v8.2.1 )
+option(BUILD_MPAS "Build mpas-jedi" ON)
+if(BUILD_MPAS)
+  set(MPAS_DOUBLE_PRECISION "ON" CACHE STRING "MPAS-Model: Use double precision 64-bit Floating point.")
+  set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
+  set(MPAS_OPENMP "ON" CACHE STRING "MPAS-Model: Enable OpenMP.")
 
-option(ENABLE_MPAS_JEDI_DATA "Obtain mpas-jedi test data from mpas-jedi-data repository (vs tarball)" ON)
-ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      BRANCH develop UPDATE )
+  # Using a commit from MPAS-model release-v8.4.0 branch which contains the fix for MPAS-model#1420. Once an offical tag with this fix exists we should use that instead.
+  ecbuild_bundle( PROJECT mpas           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"     TAG 0e5a47a0e1bcccd6e3d99909b76e740a643c4db6 )
+  ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      BRANCH develop UPDATE )
+endif()
 
 ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"           BRANCH develop UPDATE )
 
