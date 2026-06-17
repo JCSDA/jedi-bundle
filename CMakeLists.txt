@@ -57,21 +57,21 @@ endif()
 
 ecbuild_bundle( PROJECT gsw      GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
 
-ecbuild_bundle( PROJECT oops     GIT "https://github.com/jcsda/oops.git"        BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT oops     GIT "https://github.com/jcsda/oops.git"        TAG 1.13.0 UPDATE )
 
-ecbuild_bundle( PROJECT jedi-model-data GIT "https://github.com/jcsda-internal/jedi-model-data.git"  BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT vader    GIT "https://github.com/jcsda/vader.git"       BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT saber    GIT "https://github.com/jcsda/saber.git"       BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT jedi-model-data GIT "https://github.com/jcsda-internal/jedi-model-data.git"  TAG 1.0.0 UPDATE )
+ecbuild_bundle( PROJECT vader    GIT "https://github.com/jcsda/vader.git"       TAG 1.10.0 UPDATE )
+ecbuild_bundle( PROJECT saber    GIT "https://github.com/jcsda/saber.git"       TAG 1.13.0 UPDATE )
 
-ecbuild_bundle( PROJECT crtm     GIT "https://github.com/jcsda/CRTMv3.git"               BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT crtm     GIT "https://github.com/jcsda/CRTMv3.git"               TAG v3.1.4 UPDATE )
 
 option(ENABLE_IODA_DATA "Obtain ioda test data from ioda-data repository (vs tarball)" ON)
-ecbuild_bundle( PROJECT ioda-data GIT "https://github.com/jcsda-internal/ioda-data.git"  BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT ioda     GIT "https://github.com/jcsda/ioda.git"        BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT ioda-data GIT "https://github.com/jcsda-internal/ioda-data.git"  TAG 2.12.0 UPDATE )
+ecbuild_bundle( PROJECT ioda     GIT "https://github.com/jcsda/ioda.git"        TAG 2.12.0 UPDATE )
 
 option(ENABLE_UFO_DATA "Obtain ufo test data from ufo-data repository (vs tarball)" ON)
-ecbuild_bundle( PROJECT ufo-data GIT "https://github.com/jcsda-internal/ufo-data.git"    BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT ufo      GIT "https://github.com/jcsda/ufo.git"         BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT ufo-data GIT "https://github.com/jcsda-internal/ufo-data.git"    TAG 1.13.0 UPDATE )
+ecbuild_bundle( PROJECT ufo      GIT "https://github.com/jcsda/ufo.git"         TAG 1.13.0 UPDATE )
 
 # Build IODA converters if requested
 option(BUILD_IODA_CONVERTERS "Build IODA Converters" OFF)
@@ -79,13 +79,13 @@ if(BUILD_IODA_CONVERTERS)
   ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" BRANCH develop UPDATE )
 endif()
 
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      TAG 1.8.0 UPDATE )
 
 option(ENABLE_FV3_JEDI_DATA "Obtain fv3-jedi test data from fv3-jedi-data repository (vs tarball)" ON)
-ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          TAG 1.12.0 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  TAG 1.12.0 UPDATE )
 
-ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE RECURSIVE )
+ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            TAG 1.9.0 UPDATE RECURSIVE )
 
 option(BUILD_MPAS "Build mpas-jedi" ON)
 if(BUILD_MPAS)
@@ -95,10 +95,10 @@ if(BUILD_MPAS)
 
   # Using a commit from MPAS-model release-v8.4.0 branch which contains the fix for MPAS-model#1420. Once an offical tag with this fix exists we should use that instead.
   ecbuild_bundle( PROJECT mpas           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"     TAG 0e5a47a0e1bcccd6e3d99909b76e740a643c4db6 )
-  ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" BRANCH develop UPDATE )
-  ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" TAG 4.0.0 UPDATE )
+  ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      TAG 4.0.0 UPDATE )
 endif()
 
-ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"           BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"           TAG 1.3.0 UPDATE )
 
 ecbuild_bundle_finalize()
