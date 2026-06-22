@@ -80,11 +80,8 @@ if(BUILD_IODA_CONVERTERS)
 endif()
 
 # FV3 / GFS / GEOS
-option(BUILD_FV3 "Build the model interface for GFS and GEOS" ON)
-if(BUILD_FV3)
-  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      TAG 1.8.0 UPDATE )
-  ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          TAG 1.12.0 UPDATE )
-  ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  TAG 1.12.0 UPDATE )
-endif()
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      TAG 1.8.0 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          TAG 1.12.0 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  TAG 1.12.0 UPDATE )
 
 ecbuild_bundle_finalize()
