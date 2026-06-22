@@ -80,15 +80,12 @@ if(BUILD_IODA_CONVERTERS)
 endif()
 
 # MPAS
-option(BUILD_MPAS "Build the model interface for MPAS" ON)
-if(BUILD_MPAS)
-  set(MPAS_DOUBLE_PRECISION "ON" CACHE STRING "MPAS-Model: Use double precision 64-bit Floating point.")
-  set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
-  set(MPAS_OPENMP "ON" CACHE STRING "MPAS-Model: Enable OpenMP.")
+set(MPAS_DOUBLE_PRECISION "ON" CACHE STRING "MPAS-Model: Use double precision 64-bit Floating point.")
+set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
+set(MPAS_OPENMP "ON" CACHE STRING "MPAS-Model: Enable OpenMP.")
 
-  ecbuild_bundle( PROJECT MPAS           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"    TAG v8.4.0 )
-  ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" TAG 4.0.0 UPDATE )
-  ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      TAG 4.0.0 UPDATE )
-endif()
+ecbuild_bundle( PROJECT MPAS           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"    TAG v8.4.0 )
+ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" TAG 4.0.0 UPDATE )
+ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      TAG 4.0.0 UPDATE )
 
 ecbuild_bundle_finalize()
