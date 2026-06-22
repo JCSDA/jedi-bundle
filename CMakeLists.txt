@@ -79,20 +79,6 @@ if(BUILD_IODA_CONVERTERS)
   ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" BRANCH develop UPDATE )
 endif()
 
-# FV3 / GFS / GEOS
-option(BUILD_FV3 "Build the model interface for GFS and GEOS" ON)
-if(BUILD_FV3)
-  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      TAG 1.8.0 UPDATE )
-  ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          TAG 1.12.0 UPDATE )
-  ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  TAG 1.12.0 UPDATE )
-endif()
-
-# SOCA / MOM6 / CICE
-option(BUILD_SOCA "Build the model interface for MOM6/CICE" ON)
-if(BUILD_SOCA)
-  ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            TAG 1.9.0 UPDATE RECURSIVE )
-endif()
-
 # MPAS
 option(BUILD_MPAS "Build the model interface for MPAS" ON)
 if(BUILD_MPAS)
@@ -103,17 +89,6 @@ if(BUILD_MPAS)
   ecbuild_bundle( PROJECT MPAS           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"    TAG v8.4.0 )
   ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" TAG 4.0.0 UPDATE )
   ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      TAG 4.0.0 UPDATE )
-endif()
-
-# PyIRI
-option(BUILD_PYIRI "Build PyIRI-jedi" ON)
-if(BUILD_PYIRI)
-  ecbuild_bundle( PROJECT pyiri-jedi  GIT "https://github.com/jcsda/pyiri-jedi.git"  TAG 1.0.0 UPDATE RECURSIVE )
-endif()
-
-# Coupling
-if(BUILD_FV3 AND BUILD_SOCA)
-  ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"           TAG 1.3.0 UPDATE )
 endif()
 
 ecbuild_bundle_finalize()
