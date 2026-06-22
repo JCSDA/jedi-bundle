@@ -80,9 +80,6 @@ if(BUILD_IODA_CONVERTERS)
 endif()
 
 # SOCA / MOM6 / CICE
-option(BUILD_SOCA "Build the model interface for MOM6/CICE" ON)
-if(BUILD_SOCA)
-  ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            TAG 1.9.0 UPDATE RECURSIVE )
-endif()
+ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            TAG 1.9.0 UPDATE RECURSIVE )
 
 ecbuild_bundle_finalize()
