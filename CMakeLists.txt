@@ -80,9 +80,6 @@ if(BUILD_IODA_CONVERTERS)
 endif()
 
 # PyIRI
-option(BUILD_PYIRI "Build PyIRI-jedi" ON)
-if(BUILD_PYIRI)
-  ecbuild_bundle( PROJECT pyiri-jedi  GIT "https://github.com/jcsda/pyiri-jedi.git"  TAG 1.0.0 UPDATE RECURSIVE )
-endif()
+ecbuild_bundle( PROJECT pyiri-jedi  GIT "https://github.com/jcsda/pyiri-jedi.git"  TAG 1.0.0 UPDATE RECURSIVE )
 
 ecbuild_bundle_finalize()
