@@ -79,15 +79,22 @@ if(BUILD_IODA_CONVERTERS)
   ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" BRANCH develop UPDATE )
 endif()
 
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      BRANCH develop UPDATE )
+# FV3 / GFS / GEOS
+option(BUILD_FV3 "Build the model interface for GFS and GEOS" ON)
+if(BUILD_FV3)
+  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git"      BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  BRANCH develop UPDATE )
+endif()
 
-option(ENABLE_FV3_JEDI_DATA "Obtain fv3-jedi test data from fv3-jedi-data repository (vs tarball)" ON)
-ecbuild_bundle( PROJECT fv3-jedi-data  GIT "https://github.com/jcsda-internal/fv3-jedi-data.git"          BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"                  BRANCH develop UPDATE )
+# SOCA / MOM6 / CICE
+option(BUILD_SOCA "Build the model interface for MOM6/CICE" ON)
+if(BUILD_SOCA)
+  ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE RECURSIVE )
+endif()
 
-ecbuild_bundle( PROJECT soca        GIT "https://github.com/jcsda/soca.git"            BRANCH develop UPDATE RECURSIVE )
-
-option(BUILD_MPAS "Build mpas-jedi" ON)
+# MPAS
+option(BUILD_MPAS "Build the model interface for MPAS" ON)
 if(BUILD_MPAS)
   set(MPAS_DOUBLE_PRECISION "ON" CACHE STRING "MPAS-Model: Use double precision 64-bit Floating point.")
   set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
@@ -99,6 +106,15 @@ if(BUILD_MPAS)
   ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      BRANCH develop UPDATE )
 endif()
 
-ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"           BRANCH develop UPDATE )
+# PyIRI
+option(BUILD_PYIRI "Build PyIRI-jedi" ON)
+if(BUILD_PYIRI)
+  ecbuild_bundle( PROJECT pyiri-jedi  GIT "https://github.com/jcsda/pyiri-jedi.git"  BRANCH develop UPDATE RECURSIVE )
+endif()
+
+# Coupling
+if(BUILD_FV3 AND BUILD_SOCA)
+  ecbuild_bundle( PROJECT coupling   GIT "https://github.com/jcsda/coupling.git"           BRANCH develop UPDATE )
+endif()
 
 ecbuild_bundle_finalize()
