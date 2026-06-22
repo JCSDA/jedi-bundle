@@ -100,8 +100,7 @@ if(BUILD_MPAS)
   set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
   set(MPAS_OPENMP "ON" CACHE STRING "MPAS-Model: Enable OpenMP.")
 
-  # Using a commit from MPAS-model release-v8.4.0 branch which contains the fix for MPAS-model#1420. Once an offical tag with this fix exists we should use that instead.
-  ecbuild_bundle( PROJECT mpas           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"     TAG 0e5a47a0e1bcccd6e3d99909b76e740a643c4db6 )
+  ecbuild_bundle( PROJECT MPAS           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"    TAG v8.4.0 )
   ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" BRANCH develop UPDATE )
   ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      BRANCH develop UPDATE )
 endif()
