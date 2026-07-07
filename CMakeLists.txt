@@ -76,7 +76,7 @@ ecbuild_bundle( PROJECT ufo      GIT "https://github.com/jcsda/ufo.git"         
 # Build IODA converters if requested
 option(BUILD_IODA_CONVERTERS "Build IODA Converters" OFF)
 if(BUILD_IODA_CONVERTERS)
-  ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT iodaconv GIT "https://github.com/jcsda/ioda-converters.git" TAG 1.0.0 UPDATE )
 endif()
 
 # MPAS
