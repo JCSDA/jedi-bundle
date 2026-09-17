@@ -100,7 +100,7 @@ if(BUILD_MPAS)
   set(MPAS_CORES init_atmosphere atmosphere CACHE STRING "MPAS-Model: cores to build.")
   set(MPAS_OPENMP "ON" CACHE STRING "MPAS-Model: Enable OpenMP.")
 
-  ecbuild_bundle( PROJECT MPAS           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"    TAG v8.4.0 )
+  ecbuild_bundle( PROJECT MPAS           GIT "https://github.com/MPAS-Dev/MPAS-Model.git"    TAG v8.4.2 )
   ecbuild_bundle( PROJECT mpas-jedi-data GIT "https://github.com/jcsda-internal/mpas-jedi-data.git" BRANCH develop UPDATE )
   ecbuild_bundle( PROJECT mpas-jedi      GIT "https://github.com/jcsda/mpas-jedi.git"      BRANCH develop UPDATE )
 endif()
